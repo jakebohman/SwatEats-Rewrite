@@ -1,5 +1,5 @@
 # SwatEats
-This is a rewritre of a website was created during the Spring '25 course "CPSC71: Software Engineering" at Swarthmore College by Jake Bohman, Yana Sharifullina, and Lona Hoang with the goal of providing a proof-of-concept application demonstrating various ways that food waste and food insecurity might be reduced among the student population at Swarthmore.
+This is a rewrite of a website was created during the Spring '25 course "CPSC71: Software Engineering" at Swarthmore College by Jake Bohman, Yana Sharifullina, and Lona Hoang with the goal of providing a proof-of-concept application demonstrating various ways that food waste and food insecurity might be reduced among the student population at Swarthmore.
 
 The site contains a list of food-related resources potentially useful to Swarthmore students, an application where students can input their available ingredients and receive in response a list of recipes using those ingredients, and a forum which students can use to share their food with others to prevent waste.
 

@@ -19,9 +19,35 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // paths
-app.use(express.static(path.join(__dirname, "../client/templates/")));
-app.use(express.static(path.join(__dirname, "../client/public/")));
-app.use(express.static(path.join(__dirname, "../client/js/")));
+// Serve the React production build from `client/dist`.
+// If the build directory doesn't exist, log a helpful message and continue running the API.
+const reactDist = path.join(__dirname, "../client/dist");
+const apiPrefixes = ['/searchIngredient', '/findRecipes', '/getComments', '/addComment', '/deleteComment'];
+
+if (fs.existsSync(reactDist)) {
+  app.use(express.static(reactDist));
+
+  // SPA fallback for client-side routing: for any non-API GET request, return index.html
+  app.use((req, res, next) => {
+    if (req.method !== 'GET') return next();
+    if (apiPrefixes.some(p => req.path.startsWith(p))) return next();
+
+    const potential = path.join(reactDist, req.path);
+    if (fs.existsSync(potential) && fs.statSync(potential).isFile()) return next();
+
+    res.sendFile(path.join(reactDist, 'index.html'));
+  });
+} else {
+  console.warn('\n[Warning] React build not found at client/dist. The API will still run, but static frontend files will not be served.');
+  console.warn('Run `cd client; npm install` and `npm run build` to create the production build at client/dist.');
+
+  // Provide a minimal SPA fallback that explains how to build the client when visiting the site in a browser.
+  app.use((req, res, next) => {
+    if (req.method !== 'GET') return next();
+    if (apiPrefixes.some(p => req.path.startsWith(p))) return next();
+    res.status(200).send('<html><head><title>Build Missing</title></head><body><h1>Frontend build not found</h1><p>Run <code>cd client && npm install && npm run build</code> to generate the static files.</p></body></html>');
+  });
+}
 
 // ----------------------------------
 // Global variables
@@ -202,13 +228,8 @@ function loadRecipes() {
 }
 
 // ----------------------------------
-// Static Routes
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "../client/templates/index.html")));
-app.get("/index", (req, res) => res.sendFile(path.join(__dirname, "../client/templates/index.html")));
-app.get("/home", (req, res) => res.sendFile(path.join(__dirname, "../client/templates/index.html")));
-app.get("/recipe_finder", (req, res) => res.sendFile(path.join(__dirname, "../client/templates/recipe_finder.html")));
-app.get("/food_sharing", (req, res) => res.sendFile(path.join(__dirname, "../client/templates/food_sharing.html")));
-app.get("/resources", (req, res) => res.sendFile(path.join(__dirname, "../client/templates/resources.html")));
+// Note: Static SPA routes are handled by the React build (client/dist).
+// Legacy template routes removed.
 
 // Recipe Finder API
 app.post("/searchIngredient", (req, res) => {

@@ -1,7 +1,7 @@
 /*
-*  SwatEats - A web app to help reduce food waste
-*  Originally designed in Flask, converted to Node.js/Express
-*  Jake Bohman
+*  SwatEats - A web app to help reduce food waste on Swarthmore's campus
+*  Original Flask app developed by Jake Bohman, Lona Hoang, and Yana Sharifullina.
+*  Converted to Node.js/Express and React by Jake Bohman.
 */
 
 // Node.js libraries
@@ -13,40 +13,32 @@ const csv = require("csv-parser");
 const path = require("path");
 const crypto = require("crypto");
 const cron = require("node-cron");
-
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// paths
-// Serve the React production build from `client/dist`.
-// If the build directory doesn't exist, log a helpful message and continue running the API.
+// Paths
 const reactDist = path.join(__dirname, "../client/dist");
 const apiPrefixes = ['/searchIngredient', '/findRecipes', '/getComments', '/addComment', '/deleteComment'];
 
 if (fs.existsSync(reactDist)) {
   app.use(express.static(reactDist));
-
-  // SPA fallback for client-side routing: for any non-API GET request, return index.html
+  // Return index.html for any non-API GET request
   app.use((req, res, next) => {
-    if (req.method !== 'GET') return next();
-    if (apiPrefixes.some(p => req.path.startsWith(p))) return next();
+    if (req.method !== 'GET') 
+      return next();
+    if (apiPrefixes.some(p => req.path.startsWith(p))) 
+      return next();
 
     const potential = path.join(reactDist, req.path);
-    if (fs.existsSync(potential) && fs.statSync(potential).isFile()) return next();
-
+    if (fs.existsSync(potential) && fs.statSync(potential).isFile()) 
+      return next();
+    
     res.sendFile(path.join(reactDist, 'index.html'));
   });
 } else {
   console.warn('\n[Warning] React build not found at client/dist. The API will still run, but static frontend files will not be served.');
   console.warn('Run `cd client; npm install` and `npm run build` to create the production build at client/dist.');
-
-  // Provide a minimal SPA fallback that explains how to build the client when visiting the site in a browser.
-  app.use((req, res, next) => {
-    if (req.method !== 'GET') return next();
-    if (apiPrefixes.some(p => req.path.startsWith(p))) return next();
-    res.status(200).send('<html><head><title>Build Missing</title></head><body><h1>Frontend build not found</h1><p>Run <code>cd client && npm install && npm run build</code> to generate the static files.</p></body></html>');
-  });
 }
 
 // ----------------------------------
@@ -228,8 +220,7 @@ function loadRecipes() {
 }
 
 // ----------------------------------
-// Note: Static SPA routes are handled by the React build (client/dist).
-// Legacy template routes removed.
+// API Routes
 
 // Recipe Finder API
 app.post("/searchIngredient", (req, res) => {

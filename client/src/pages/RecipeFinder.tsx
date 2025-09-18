@@ -16,21 +16,22 @@ export default function RecipeFinder() {
   const debounceRef = useRef<any>()
   const dropdownRef = useRef<HTMLDivElement | null>(null)
 
+  // Handle ingredient input
   const onInput = (value: string) => {
     setQuery(value)
-    if (debounceRef.current) clearTimeout(debounceRef.current)
-    if (value.trim().length < 1) return setDropdown([])
+    if (debounceRef.current) 
+      clearTimeout(debounceRef.current)
+    if (value.trim().length < 1) 
+      return setDropdown([])
     debounceRef.current = setTimeout(async () => {
       try {
         const items = await run(() => searchIngredient(value))
         setDropdown(items.map((i: any) => i.strIngredient))
-      } catch (err) {
-        // handled
-      }
+      } catch (err) {}
     }, 300)
   }
 
-  // allow Enter to pick the first dropdown option
+  // Enter key to add first dropdown item
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Enter' && dropdown.length > 0 && document.activeElement?.id === 'ingredient-input') {
@@ -62,12 +63,14 @@ export default function RecipeFinder() {
     return () => window.removeEventListener('keydown', onKey)
   }, [dropdown])
 
+  // Add ingredient to list
   const addIngredient = (name: string) => {
     if (!added.includes(name)) setAdded(prev => [...prev, name])
     setDropdown([])
     setQuery('')
   }
 
+  // Submit form
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {

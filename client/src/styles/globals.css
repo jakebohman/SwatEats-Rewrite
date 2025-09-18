@@ -1,99 +1,377 @@
-:root{
-  --accent:#9A2A2A; /* garnet */
-  --muted:#f6f2ef; /* off-white */
-  --accent-strong:#7f1f1f;
-}
-.app{background:var(--muted);min-height:100vh}
-body{font-family:Inter, system-ui, Arial, sans-serif; margin:0; background:var(--muted)}
-.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
-.skip-link:focus{left:8px;top:8px;background:#000;color:#fff;padding:8px;border-radius:4px}
-.topnav{background:white;padding:12px;display:flex;gap:12px;border-bottom:1px solid #eee}
-.topnav a{color:#333;text-decoration:none;padding:6px 8px;border-radius:4px}
-.topnav a.active{background:var(--accent);color:white}
-.container{padding:30px;max-width:1000px;margin:0 auto}
-.topnav a:focus{outline:2px solid #333}
-.dropdown-option:focus{outline:2px solid var(--accent);background:#fff5f5}
-.form-section{margin-bottom:16px}
-.form-section input[type="text"], .form-section input[type="date"], .form-section input[type="password"], .form-section textarea, input[type="submit"], button{
-  font-family:inherit;padding:8px 10px;border:1px solid #ddd;border-radius:6px;background:white
+:root {
+  --accent: #9A2A2A;
+  /* garnet */
+  --muted: #f6f2ef;
+  /* off-white */
+  --accent-strong: #7f1f1f;
 }
 
-#ingredient-dropdown{background:white;border:1px solid #ccc;max-height:200px;overflow-y:auto;position:absolute;z-index:999;left:0;right:0;margin-top:6px;border-radius:6px;box-shadow:0 8px 16px rgba(0,0,0,0.08)}
-.dropdown-option{padding:10px;cursor:pointer}
-.dropdown-option:hover{background:linear-gradient(90deg, rgba(154,42,42,0.05), rgba(154,42,42,0.02))}
-.input-with-dropdown label{display:block;margin-bottom:8px}
-.ingredient-input{width:100%;min-height:44px;padding:10px 12px;font-size:16px}
+.app {
+  background: var(--muted);
+  min-height: 100vh
+}
 
-#ingredient-dropdown[aria-expanded="false"]{display:none;border-top:0}
-#ingredient-dropdown[aria-expanded="true"]{display:block}
+body {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  margin: 0;
+  background: var(--muted)
+}
 
-.ingredient-tag{background:var(--accent);color:white;padding:6px 10px;border-radius:20px;margin-right:6px;display:inline-flex;align-items:center;margin-top:12px}
-.tag-remove{background:transparent;border:none;color:rgba(255,255,255,0.9);margin-left:8px;cursor:pointer;padding:0}
-.ingredient-tag{height:30px;padding:4px 10px;font-size:13px}
-.ingredient-tag{background:var(--accent);color:white;padding:6px 10px;border-radius:20px;margin-right:6px;display:inline-flex;align-items:center}
-.ingredient-tag span{margin-left:8px;cursor:pointer}
-.results{background:white;padding:20px;border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,0.05);margin-top:18px}
-.recipe-card{padding:18px;border-radius:8px;margin-bottom:10px;background:#fffdfa;border:1px solid rgba(154,42,42,0.06)}
-.recipe-card img{max-width:100%;height:auto;border-radius:8px;margin-bottom:10px}
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden
+}
 
-.user-ingredient{background:transparent}
-.user-ingredient strong{color:var(--accent-strong)}
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px
+}
+
+.topnav {
+  background: white;
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid #eee
+}
+
+.topnav a {
+  color: #333;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 4px
+}
+
+.topnav a.active {
+  background: var(--accent);
+  color: white
+}
+
+.container {
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto
+}
+
+.topnav a:focus {
+  outline: 2px solid #333
+}
+
+.dropdown-option:focus {
+  outline: 2px solid var(--accent);
+  background: #fff5f5
+}
+
+.form-section {
+  margin-bottom: 16px
+}
+
+.form-section input[type="text"],
+.form-section input[type="date"],
+.form-section input[type="password"],
+.form-section textarea,
+input[type="submit"],
+button {
+  font-family: inherit;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white
+}
+
+#ingredient-dropdown {
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  margin-top: 6px;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08)
+}
+
+.dropdown-option {
+  padding: 10px;
+  cursor: pointer
+}
+
+.dropdown-option:hover {
+  background: linear-gradient(90deg, rgba(154, 42, 42, 0.05), rgba(154, 42, 42, 0.02))
+}
+
+.input-with-dropdown label {
+  display: block;
+  margin-bottom: 8px
+}
+
+.ingredient-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-size: 16px
+}
+
+#ingredient-dropdown[aria-expanded="false"] {
+  display: none;
+  border-top: 0
+}
+
+#ingredient-dropdown[aria-expanded="true"] {
+  display: block
+}
+
+.ingredient-tag {
+  background: var(--accent);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  margin-right: 6px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px
+}
+
+.tag-remove {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 8px;
+  cursor: pointer;
+  padding: 0
+}
+
+.ingredient-tag {
+  height: 30px;
+  padding: 4px 10px;
+  font-size: 13px
+}
+
+.ingredient-tag {
+  background: var(--accent);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  margin-right: 6px;
+  display: inline-flex;
+  align-items: center
+}
+
+.ingredient-tag span {
+  margin-left: 8px;
+  cursor: pointer
+}
+
+.results {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 18px
+}
+
+.recipe-card {
+  padding: 18px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #fffdfa;
+  border: 1px solid rgba(154, 42, 42, 0.06)
+}
+
+.recipe-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px
+}
+
+.user-ingredient {
+  background: transparent
+}
+
+.user-ingredient strong {
+  color: var(--accent-strong)
+}
 
 /* Responsive grid for recipes */
-.results .recipe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-
-.outer{display:flex;justify-content:space-between;padding:24px;max-width:1200px;margin:0 auto;gap:20px}
-#respond{width:30%;background:white;padding:20px;border-radius:8px}
-.form-section input, .form-section textarea, #respond input, #respond textarea{width:100%;margin-bottom:10px}
-
-/* Dietary options: reduce spacing and align with checkboxes/radios */
-.form-section label > input[type="checkbox"], .form-section label > input[type="radio"]{margin-right:8px;vertical-align:middle}
-.form-section > label{display:inline-flex;align-items:center;margin-right:12px;margin-bottom:6px}
-
-/* Make Find Recipes button larger */
-.find-btn{padding:12px 16px;font-size:16px}
-
-/* Slightly reduce search bar height */
-.ingredient-input{min-height:38px}
-
-/* Selection options white bg to match results box */
-#ingredient-dropdown{background:white}
-
-#comments-list{width:65%;background:white;padding:20px;border-radius:8px}
-.comment-card{border:1px solid #e6e6e6;padding:12px;border-radius:8px;margin-bottom:12px}
-
-/* Alternate backgrounds for list items (use the list item to alternate to be consistent) */
-.comment-list-item:nth-child(odd) .comment-card{background:#ffffff}
-.comment-list-item:nth-child(even) .comment-card{background:#f7f7f7}
-
-/* Remove numbering (we switched to ul) */
-#posts-list{list-style:none;padding:0;margin:0}
-
-.section-heading{color:var(--accent);}
-.form-label{font-weight:700}
-.post-info .labelled strong{font-weight:700;margin-right:6px}
-
-.find-btn, #respond input[type="submit"], #respond form input[type="submit"], #respond form button, input[type="submit"], button{
-  background:var(--accent);color:white;border:none;padding:10px 12px;border-radius:6px;cursor:pointer
+.results .recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px
 }
 
-.find-btn:hover, #respond input[type="submit"]:hover{background:var(--accent-strong)}
-.comment-card{display:flex;justify-content:space-between;gap:20px}
-.post-info{min-width:200px;font-size:14px;color:#555}
-.contentDiv{flex:1}
-.footer{margin-top:24px;padding:12px;text-align:center}
+.outer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px
+}
 
-@media (max-width:900px){
-  .outer{flex-direction:column}
-  #respond,#comments-list{width:100%}
-  .recipe-card img{max-width:100%}
+#respond {
+  width: 30%;
+  background: white;
+  padding: 20px;
+  border-radius: 8px
+}
+
+.form-section input,
+.form-section textarea,
+#respond input,
+#respond textarea {
+  width: 100%;
+  margin-bottom: 10px
+}
+
+/* Dietary options: reduce spacing and align with checkboxes/radios */
+.form-section label>input[type="checkbox"],
+.form-section label>input[type="radio"] {
+  margin-right: 8px;
+  vertical-align: middle
+}
+
+.form-section>label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 12px;
+  margin-bottom: 6px
+}
+
+/* Make Find Recipes button larger */
+.find-btn {
+  padding: 12px 16px;
+  font-size: 16px
+}
+
+/* Slightly reduce search bar height */
+.ingredient-input {
+  min-height: 38px
+}
+
+/* Selection options white bg to match results box */
+#ingredient-dropdown {
+  background: white
+}
+
+#comments-list {
+  width: 65%;
+  background: white;
+  padding: 20px;
+  border-radius: 8px
+}
+
+.comment-card {
+  border: 1px solid #e6e6e6;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px
+}
+
+/* Alternate backgrounds for list items (use the list item to alternate to be consistent) */
+.comment-list-item:nth-child(odd) .comment-card {
+  background: #ffffff
+}
+
+.comment-list-item:nth-child(even) .comment-card {
+  background: #f7f7f7
+}
+
+/* Remove numbering (we switched to ul) */
+#posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0
+}
+
+.section-heading {
+  color: var(--accent);
+}
+
+.form-label {
+  font-weight: 700
+}
+
+.post-info .labelled strong {
+  font-weight: 700;
+  margin-right: 6px
+}
+
+.find-btn,
+#respond input[type="submit"],
+#respond form input[type="submit"],
+#respond form button,
+input[type="submit"],
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer
+}
+
+.find-btn:hover,
+#respond input[type="submit"]:hover {
+  background: var(--accent-strong)
+}
+
+.comment-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px
+}
+
+.post-info {
+  min-width: 200px;
+  font-size: 14px;
+  color: #555
+}
+
+.contentDiv {
+  flex: 1
+}
+
+.footer {
+  margin-top: 24px;
+  padding: 12px;
+  text-align: center
+}
+
+@media (max-width:900px) {
+  .outer {
+    flex-direction: column
+  }
+
+  #respond,
+  #comments-list {
+    width: 100%
+  }
+
+  .recipe-card img {
+    max-width: 100%
+  }
 }
 
 /* Suppress browser autofill background in Chrome/Edge/Firefox */
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset !important;
   box-shadow: 0 0 0px 1000px white inset !important;
 }
-input:-internal-autofill-selected, textarea:-internal-autofill-selected {
+
+input:-internal-autofill-selected,
+textarea:-internal-autofill-selected {
   background-color: transparent !important;
 }

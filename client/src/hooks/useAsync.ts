@@ -1,3 +1,5 @@
+// simple async helper hook
+
 import { useState, useCallback } from 'react'
 
 export default function useAsync() {

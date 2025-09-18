@@ -10,6 +10,7 @@ export default function FoodSharing() {
 
   const { loading, error, run } = useAsync()
 
+  // Load comments
   useEffect(() => {
     run(() => getComments()).then(setComments).catch(err => {
       console.error(err)
@@ -17,22 +18,23 @@ export default function FoodSharing() {
     })
   }, [run])
 
+  // Submit new comment
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       await run(() => addComment(form))
-      // After successful post, refresh the page so server data is authoritative
       window.location.reload()
     } catch (err: any) {
       setErrorMsg(err?.message || 'Failed to post')
     }
   }
 
+  // Remove comment
   const remove = async (e: React.FormEvent) => {
     e.preventDefault()
-  const fd = new FormData(e.target as HTMLFormElement)
-  const data: any = {}
-  fd.forEach((v, k) => { data[k] = v })
+    const fd = new FormData(e.target as HTMLFormElement)
+    const data: any = {}
+    fd.forEach((v, k) => { data[k] = v })
     try {
       await run(() => deleteComment(data))
       // After successful delete, refresh the page
@@ -71,15 +73,15 @@ export default function FoodSharing() {
           <input type="submit" value="Submit" aria-label="Remove post" />
         </form>
 
-    <p>Please handle food responsibly. We claim no liability for any misuse of our service.</p>
+        <p>Please handle food responsibly. We claim no liability for any misuse of our service.</p>
       </div>
 
       <div id="comments-list">
         <h2 className="section-heading">Free food opportunities:</h2>
-  {loading && <p>Loading comments...</p>}
-  {error && <p style={{ color: 'red' }}>{error}</p>}
-  {errorMsg && <p role="status" aria-live="assertive" style={{ color: 'red' }}>{errorMsg}</p>}
-  {success && <p role="status" aria-live="polite" style={{ color: 'green' }}>{success}</p>}
+        {loading && <p>Loading comments...</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {errorMsg && <p role="status" aria-live="assertive" style={{ color: 'red' }}>{errorMsg}</p>}
+        {success && <p role="status" aria-live="polite" style={{ color: 'green' }}>{success}</p>}
         <ul id="posts-list" className={comments.length ? 'hfeed has-comments' : 'hfeed'}>
           {!loading && comments.length === 0 && <li className="no-comments">Be the first to share your food.</li>}
           {comments.map((c, idx) => (

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="/food_sharing.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="#">
+    <style>
+        h1,
+        h2 {
+            color: #9A2A2A;
+        }
+
+        .outer {
+            display: flex;
+            justify-content: space-between;
+            padding-right: 30px;
+            padding-left: 30px;
+            padding-bottom: 30px;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        #respond {
+            width: 25%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        #respond h2,
+        #respond h1,
+        #comments-list h2 {
+            font-weight: lighter;
+        }
+
+        #respond label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        #respond input[type='text'],
+        #respond input[type='email'],
+        #respond input[type='date'],
+        #respond textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        #respond input[type='submit'] {
+            background-color: #9A2A2A;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #respond input[type='submit']:hover {
+            background-color: #701a1a;
+        }
+
+        #comments-list {
+            width: 70%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-left: 30px;
+            margin-bottom: 30px;
+            list-style: none;
+            padding-bottom: 36px;
+        }
+
+        #comments-list li {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: inline-flex;
+            width: 95%;
+        }
+
+        #comments-list h2 {
+            padding-left: 40px;
+        }
+
+        #comments-list li:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #posts-list.has-comments li.no-comments {
+            display: none;
+        }
+
+        .comment-card {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        .post-info {
+            min-width: 200px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .post-info address {
+            font-style: normal;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .contentDiv {
+            flex-grow: 1;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .contentDiv p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <a href="/">HOME</a>
+        <a href="/recipe_finder">RECIPE FINDER</a>
+        <a class="active" href="/food_sharing">FOOD SHARING</a>
+        <a href="/resources">RESOURCES</a>
+    </div>
+
+    <div style="padding-left:16px">
+        <h2>
+            <p><i>
+                    <p style="color:#9A2A2A; font-weight: lighter">Food Sharing
+                </i></p>
+        </h2>
+        <h1>
+            <p style="color:#9A2A2A; font-weight: bolder">Share food with your peers!</p>
+        </h1>
+    </div>
+    <div class="outer">
+        <div id="respond">
+            <h2>Share your food:</h2>
+            <form onsubmit="addComment(event)" id="commentform">
+
+                <label for="comment_author" class="required">Name</label>
+                <input type="text" name="comment_author" id="comment_author" value="" tabindex="1" required="required">
+
+                <label for="contact" class="required">Contact</label>
+                <input type="text" name="contact" id="contact" value="" tabindex="2" required="required">
+
+                <label for="date" class="required">Expiration Date</label>
+                <input type="date" name="date" id="date" value="" tabindex="3" required="required">
+
+                <label for="contact" class="required">Password (to take down your post once it's claimed)</label>
+                <input type="text" name="pwrd" id="contact" value="" tabindex="4" required="required">
+
+                <label for="comment" class="required">Description</label>
+                <textarea name="comment" id="comment" rows="6" tabindex="5" required="required"
+                    placeholder="Mac and Cheese: feeds 2 people, contains dairy" style="resize: vertical;"></textarea>
+
+
+                <input type="hidden" name="comment_post_ID" value="1" id="comment_post_ID" />
+                <input name="submit" type="submit" value="Submit" />
+
+            </form>
+            <br>
+            <br>
+            <hr style="width:100%">
+            <br>
+            <h2>Take down your post:</h2>
+            <form onsubmit="deleteComment(event)" id="commentform2">
+
+                <label for="postID" class="required">Post ID</label>
+                <input type="text" name="postID" id="postID" value="" tabindex="1" required="required">
+
+                <label for="Password" class="required">Password</label>
+                <input type="text" name="Password" id="password" value="" tabindex="1" required="required">
+
+                <input type="hidden" name="comment_post_ID" value="1" id="comment_post_ID" />
+                <input name="submit" type="submit" value="Submit" />
+            </form>
+            <br>
+            <p>Please handle food responsibly. We claim no liability for any misuse of our service.</p>
+        </div>
+        <div id="comments-list">
+            <h2>Free food opportunities:</h2>
+        </div>
+
+        <script>
+            fetch("/getComments")
+                .then(res => res.json())
+                .then(data => {
+                    console.log("✅ Loaded comments:", data);
+                    renderComments(data);
+                })
+                .catch(err => console.error("Error loading comments:", err));
+        </script>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 SwatEats.</p>
+    </div>
+
+</body>
+
+</html>

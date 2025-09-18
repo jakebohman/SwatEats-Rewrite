@@ -1,0 +1,20 @@
+{
+  "name": "swateats-rewrite",
+  "version": "1.0.0",
+  "description": "This website was created during the Spring '25 course \"CPSC71: Software Engineering\" at Swarthmore College by Jake Bohman, Yana Sharifullina, and Lona Hoang with the goal of providing a proof-of-concept application demonstrating various ways that food waste and food insecurity might be reduced among the student population at Swarthmore.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "csv-parser": "^3.2.0",
+    "express": "^5.1.0",
+    "node-cron": "^4.2.1",
+    "sqlite3": "^5.1.7"
+  }
+}

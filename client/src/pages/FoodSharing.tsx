@@ -45,6 +45,11 @@ export default function FoodSharing() {
   }
 
   return (
+    <div>
+    <div style={{ paddingLeft: 16 }}>
+      <h2 style={{ color: '#B86A6A', fontWeight: 300 }}>Share food</h2>
+      <h1 style={{ color: '#9A2A2A' }}>Campus food donations</h1>
+    </div>
     <div className="outer">
       <div id="respond">
         <h2 className="section-heading">Share your food:</h2>
@@ -99,6 +104,7 @@ export default function FoodSharing() {
           ))}
         </ul>
       </div>
+    </div>
     </div>
   )
 }

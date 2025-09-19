@@ -43,6 +43,13 @@ body {
   border-bottom: 1px solid #eee
 }
 
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
 .topnav a {
   color: #333;
   text-decoration: none;
@@ -71,7 +78,15 @@ body {
 }
 
 .form-section {
-  margin-bottom: 16px
+  margin-bottom: 8px;
+}
+
+/* Search panel: white background covering search and selection options */
+.search-panel {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.03);
 }
 
 .form-section input[type="text"],
@@ -117,9 +132,9 @@ button {
 
 .ingredient-input {
   width: 100%;
-  min-height: 44px;
-  padding: 10px 12px;
-  font-size: 16px
+  min-height: 36px; /* reduce vertical height */
+  font-size: 15px;
+  border-radius: 6px;
 }
 
 #ingredient-dropdown[aria-expanded="false"] {
@@ -206,8 +221,15 @@ button {
 /* Responsive grid for recipes */
 .results .recipe-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px
+  gap: 16px;
+  /* max 2 columns: 1 column by default, 2 columns on wider screens */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .results .recipe-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .outer {
@@ -238,14 +260,48 @@ button {
 .form-section label>input[type="checkbox"],
 .form-section label>input[type="radio"] {
   margin-right: 8px;
-  vertical-align: middle
+  vertical-align: left;
+}
+
+.option-label {
+  display: inline-flex;
+  flex-wrap: nowrap; /* keep label and input on one line */
+  margin-left: 8px;
+  margin-top: 8px;
+  font-weight: 400; /* keep option text normal weight */
+}
+
+/* When inputs are inside .option-label make sure they have small left space */
+.option-label input[type="checkbox"],
+.option-label input[type="radio"] {
+  vertical-align: left;
+  transform: translateY(1px); /* nudge so input aligns to label baseline */
+}
+
+/* Prevent option text from wrapping and provide consistent width so inputs line up */
+.option-text {
+  white-space: nowrap;
+  display: inline-block;
+  min-width: 200px; /* ensure consistent alignment — tweak if needed */
+  margin-right: 20px;
 }
 
 .form-section>label {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 12px;
-  margin-bottom: 6px
+  display: flex;
+  align-items: left;
+  margin-right: 0;
+  /* make labels vertical stack by default */
+}
+
+/* Add spacing under section headers so first option isn't jammed */
+.form-label {
+  display: block;
+}
+
+/* Make label text bold only for the key field headers (keep option labels normal) */
+label[for="ingredient-input"],
+.form-label {
+  font-weight: 700;
 }
 
 /* Make Find Recipes button larger */
@@ -256,7 +312,7 @@ button {
 
 /* Slightly reduce search bar height */
 .ingredient-input {
-  min-height: 38px
+  min-height: 38px;
 }
 
 /* Selection options white bg to match results box */
@@ -307,10 +363,9 @@ button {
   margin-right: 6px
 }
 
+
 .find-btn,
-#respond input[type="submit"],
-#respond form input[type="submit"],
-#respond form button,
+.find-btn,
 input[type="submit"],
 button {
   background: var(--accent);
@@ -318,12 +373,38 @@ button {
   border: none;
   padding: 10px 12px;
   border-radius: 6px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .find-btn:hover,
-#respond input[type="submit"]:hover {
+input[type="submit"]:hover {
   background: var(--accent-strong)
+}
+
+/* Make search-panel submit buttons full width, but keep share (#respond) buttons left-justified */
+.search-panel input[type="submit"],
+.search-panel button {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Keep share form submit buttons left aligned (auto width) */
+#respond input[type="submit"],
+#respond form input[type="submit"],
+#respond form button {
+  width: auto;
+}
+
+/* Add small layout for added ingredients */
+#added-ingredients {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Prevent ingredient tag content from wrapping mid-word */
+.ingredient-tag {
+  white-space: nowrap;
 }
 
 .comment-card {
@@ -374,4 +455,10 @@ select:-webkit-autofill {
 input:-internal-autofill-selected,
 textarea:-internal-autofill-selected {
   background-color: transparent !important;
+}
+
+@media (max-width:640px) {
+  .results .recipe-grid {
+    grid-template-columns: 1fr;
+  }
 }

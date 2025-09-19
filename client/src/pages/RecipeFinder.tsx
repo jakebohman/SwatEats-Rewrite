@@ -84,11 +84,16 @@ export default function RecipeFinder() {
   }
 
   return (
+    <div>
+    <div style={{ paddingLeft: 16 }}>
+      <h2 style={{ color: '#B86A6A', fontWeight: 300 }}>Find recipes</h2>
+      <h1 style={{ color: 'var(--accent)' }}>Find recipes using your ingredients</h1>
+    </div>
     <main id="main" className="container">
-      <h2>Find Recipes</h2>
       <form id="recipe-form" onSubmit={submit}>
+        <div className="search-panel">
         <div className="form-section input-with-dropdown" style={{ position: 'relative' }}>
-          <label htmlFor="ingredient-input">Enter Ingredients</label>
+          <label className="form-label" htmlFor="ingredient-input">Enter Ingredients</label>
           <input className="ingredient-input" autoComplete="off" id="ingredient-input" aria-label="Ingredient input" value={query} onChange={e => onInput(e.target.value)} placeholder="Type an ingredient" />
           <div id="ingredient-dropdown" ref={dropdownRef} role="listbox" aria-label="Ingredient suggestions" aria-expanded={dropdown.length > 0}>
             {dropdown.map((d, idx) => (
@@ -101,22 +106,35 @@ export default function RecipeFinder() {
             ))}
           </div>
         </div>
-
+        <br />
         <div className="form-section">
-          <label>Dietary Restrictions</label>
-          <label><input type="checkbox" value="vegetarian" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /> Vegetarian</label>
-          <label><input type="checkbox" value="vegan" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /> Vegan</label>
-          <label><input type="checkbox" value="gluten_free" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /> Gluten-Free</label>
-          <label><input type="checkbox" value="dairy_free" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /> Dairy-Free</label>
+          <label className="form-label" style={{ marginLeft: '8px' }}>Dietary Restrictions</label>
+          <div className="option-row">
+            <label className="option-label"><span className="option-text">Vegetarian</span><input type="checkbox" value="vegetarian" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /></label>
+          </div>
+          <div className="option-row">
+            <label className="option-label"><span className="option-text">Vegan</span><input type="checkbox" value="vegan" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /></label>
+          </div>
+          <div className="option-row">
+            <label className="option-label"><span className="option-text">Gluten-Free</span><input type="checkbox" value="gluten_free" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /></label>
+          </div>
+          <div className="option-row">
+            <label className="option-label"><span className="option-text">Dairy-Free</span><input type="checkbox" value="dairy_free" onChange={e => setDietary(prev => e.target.checked ? [...prev, e.target.value] : prev.filter(x => x !== e.target.value))} /></label>
+          </div>
         </div>
 
         <div className="form-section">
-          <label>Sort Recipes By</label>
-          <label><input type="radio" name="method" value={0} checked={method === 0} onChange={() => setMethod(0)} /> Most Ingredients Used</label>
-          <label><input type="radio" name="method" value={1} checked={method === 1} onChange={() => setMethod(1)} /> Fewest Extra Ingredients</label>
+          <label className="form-label" style={{ marginLeft: '8px' }}>Sort Recipes By</label>
+          <div>
+            <label className="option-label"><span className="option-text">Most Ingredients Used</span><input type="radio" name="method" value={0} checked={method === 0} onChange={() => setMethod(0)} /></label>
+          </div>
+          <div className="option-row">
+            <label className="option-label"><span className="option-text">Fewest Extra Ingredients</span><input type="radio" name="method" value={1} checked={method === 1} onChange={() => setMethod(1)} /></label>
+          </div>
         </div>
 
         <input className="find-btn" type="submit" value="Find Recipes" />
+        </div>
       </form>
 
       <div className="results" id="recipe-results" aria-live="polite">
@@ -133,5 +151,6 @@ export default function RecipeFinder() {
         )}
       </div>
     </main>
+    </div>
   )
 }
